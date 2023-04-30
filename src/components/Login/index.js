@@ -25,13 +25,15 @@ class Login extends Component {
   validatingFormDetails = () => {
     const {email, password} = this.state
 
-    if (email === '') {
-      this.setState({emailRequired: 'Required'})
-    }
-    if (password === '') {
-      this.setState({passwordRequired: 'Required'})
-    }
     if (email === '' || password === '') {
+      if (email === '' && password === '') {
+        this.setState({emailRequired: 'Required', passwordRequired: 'Required'})
+      } else if (email === '') {
+        this.setState({emailRequired: 'Required', passwordRequired: ''})
+      } else if (password === '') {
+        this.setState({passwordRequired: 'Required', emailRequired: ''})
+      }
+
       return false
     }
     this.setState({emailRequired: '', passwordRequired: ''})
@@ -122,7 +124,7 @@ class Login extends Component {
             <p className="required-msg">{`${emailRequired}*`}</p>
           )}
           {this.renderPasswordDetails()}
-          {emailRequired && (
+          {passwordRequired && (
             <p className="required-msg">{`${passwordRequired}*`}</p>
           )}
           {errorMsg && <p className="error-msg">{errorMsg}</p>}
