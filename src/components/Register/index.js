@@ -191,7 +191,7 @@ class Register extends Component {
     return (
       <div className="login-page-container">
         <form className="login-form" onSubmit={this.submitForm}>
-          <p className="login-heading">Welcome Back!</p>
+          <p className="login-heading">Welcome!</p>
           {this.renderEmailDetails()}
           {emailRequired && (
             <p className="required-msg">{`${emailRequired}*`}</p>
