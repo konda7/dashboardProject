@@ -112,7 +112,7 @@ class Dashboard extends Component {
     )
   }
 
-  renderRandomMovieLoadingView = () => (
+  renderLoadingView = () => (
     <div className="loader-container">
       <Oval color="#000" height={50} width={50} secondaryColor="#000" />
     </div>
@@ -132,9 +132,7 @@ class Dashboard extends Component {
         </div>
         <div className="dashboard-container">
           <TopBar />
-          {isLoading
-            ? this.renderRandomMovieLoadingView()
-            : this.renderUsersList()}
+          {isLoading ? this.renderLoadingView() : this.renderUsersList()}
         </div>
       </div>
     )
