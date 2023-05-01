@@ -31,7 +31,9 @@ const DeleteModal = props => {
           >
             &times;
           </button>
-          <div className="modal-header"> Delete User? </div>
+          <div className="modal-header">
+            Are you sure you want to delete this user?
+          </div>
           <div className="delete-modal-btn-container">
             <button
               type="button"
