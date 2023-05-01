@@ -2,14 +2,16 @@ import './index.css'
 
 import {Component} from 'react'
 
-import {AiOutlineEdit, AiOutlineDelete} from 'react-icons/ai'
-import {FiUserPlus} from 'react-icons/fi'
-
 import TopBar from '../TopBar'
+import AddUserModal from '../AddUserModal'
+import EditModal from '../EditModal'
+import DeleteModal from '../DeleteModal'
 
 class Dashboard extends Component {
   state = {
     usersList: [],
+    addUserValidation: '',
+    modifiedUserValidation: '',
   }
 
   componentDidMount() {
@@ -31,18 +33,50 @@ class Dashboard extends Component {
     }
   }
 
+  triggerAddUserModal = newUserDetails => {
+    if (newUserDetails === undefined) {
+      this.setState({addUserValidation: 'Please fill all the details'})
+    } else {
+      this.setState(prevState => ({
+        usersList: [...prevState.usersList, newUserDetails],
+        addUserValidation: '',
+      }))
+    }
+  }
+
+  triggerEditUserDetails = modifiedUserDetails => {
+    console.log(modifiedUserDetails)
+    if (modifiedUserDetails === undefined) {
+      this.setState({modifiedUserValidation: 'Please fill all the details'})
+    } else {
+      this.setState(prevState => ({
+        usersList: prevState.usersList.map(eachUser =>
+          eachUser.id === modifiedUserDetails.id
+            ? {...eachUser, ...modifiedUserDetails}
+            : eachUser,
+        ),
+      }))
+    }
+  }
+
+  deleteUserCard = userId => {
+    this.setState(prevState => ({
+      usersList: prevState.usersList.filter(eachUser => eachUser.id !== userId),
+    }))
+  }
+
   renderUsersList = () => {
-    const {usersList} = this.state
+    const {usersList, modifiedUserValidation} = this.state
 
     return (
-      <ui className="users-list">
+      <ul className="users-list">
         {usersList.map(eachUser => {
-          const {avatar, firstName, lastName, email} = eachUser
+          const {id, avatar, firstName, lastName, email} = eachUser
 
           const fullName = `${firstName} ${lastName}`
 
           return (
-            <li className="user-card">
+            <li className="user-card" key={id}>
               <div className="user-content-container">
                 <img src={avatar} alt={fullName} className="user-img" />
                 <div className="user-description-container">
@@ -56,33 +90,34 @@ class Dashboard extends Component {
               </div>
               <hr />
               <div className="user-card-btn-container">
-                <button type="button" className="user-card-btn">
-                  <AiOutlineEdit className="user-card-icons" />
-                  <p>Edit</p>
-                </button>
-                <button type="button" className="user-card-btn">
-                  <AiOutlineDelete className="user-card-icons" />
-                  <p>Delete</p>
-                </button>
+                <EditModal
+                  userDetails={eachUser}
+                  modifiedUserValidation={modifiedUserValidation}
+                  triggerEditUserDetails={this.triggerEditUserDetails}
+                />
+                <DeleteModal
+                  userId={eachUser.id}
+                  deleteUserCard={this.deleteUserCard}
+                />
               </div>
             </li>
           )
         })}
-      </ui>
+      </ul>
     )
   }
 
   render() {
+    const {addUserValidation} = this.state
+
     return (
       <div className="dashboard-page">
         <div className="left-panel-container">
           <h1 className="dashboard-heading">Dashboard</h1>
-          <button type="button" className="add-user-btn">
-            <div className="add-user-btn-container">
-              <FiUserPlus className="add-user-icon" />
-              <p className="add-user">Add User</p>
-            </div>
-          </button>
+          <AddUserModal
+            triggerAddUserModal={this.triggerAddUserModal}
+            addUserValidation={addUserValidation}
+          />
         </div>
         <div className="dashboard-container">
           <TopBar />

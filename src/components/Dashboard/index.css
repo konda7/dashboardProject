@@ -5,39 +5,12 @@
 
 .left-panel-container {
   width: 17%;
+  min-height: 100vh;
   background-color: #1e1e1e;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-
-/* -------------------------- */
-
-.add-user-btn {
-  background-color: #fff;
-  border: 0;
-  border-radius: 10px;
-  padding: 0px 20px 0px 20px;
-  cursor: pointer;
-}
-
-.add-user-btn-container {
-  display: flex;
-  align-items: center;
-}
-
-.add-user-icon {
-  font-size: 25px;
-  margin-right: 15px;
-}
-
-.add-user {
-  font-family: 'Roboto';
-  font-size: 20px;
-  font-weight: 500;
-}
-
-/* ---------------- */
 
 .dashboard-heading {
   font-family: 'Bree Serif';
