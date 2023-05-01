@@ -2,6 +2,8 @@ import './index.css'
 
 import {Component} from 'react'
 
+import {Oval} from 'react-loader-spinner'
+
 import TopBar from '../TopBar'
 import AddUserModal from '../AddUserModal'
 import EditModal from '../EditModal'
@@ -12,6 +14,7 @@ class Dashboard extends Component {
     usersList: [],
     addUserValidation: '',
     modifiedUserValidation: '',
+    isLoading: false,
   }
 
   componentDidMount() {
@@ -19,6 +22,8 @@ class Dashboard extends Component {
   }
 
   getUsersList = async () => {
+    this.setState({isLoading: true})
+
     const response = await fetch('https://reqres.in/api/users?page=2')
     const dataList = await response.json()
     if (response.ok) {
@@ -29,7 +34,7 @@ class Dashboard extends Component {
         firstName: eachUser.first_name,
         lastName: eachUser.last_name,
       }))
-      this.setState({usersList: modifiedData})
+      this.setState({usersList: modifiedData, isLoading: false})
     }
   }
 
@@ -107,8 +112,14 @@ class Dashboard extends Component {
     )
   }
 
+  renderRandomMovieLoadingView = () => (
+    <div className="loader-container">
+      <Oval color="#000" height={50} width={50} secondaryColor="#000" />
+    </div>
+  )
+
   render() {
-    const {addUserValidation} = this.state
+    const {addUserValidation, isLoading} = this.state
 
     return (
       <div className="dashboard-page">
@@ -121,7 +132,9 @@ class Dashboard extends Component {
         </div>
         <div className="dashboard-container">
           <TopBar />
-          {this.renderUsersList()}
+          {isLoading
+            ? this.renderRandomMovieLoadingView()
+            : this.renderUsersList()}
         </div>
       </div>
     )
