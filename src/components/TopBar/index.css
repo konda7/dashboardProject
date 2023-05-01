@@ -1,0 +1,39 @@
+.top-navbar {
+  background-color: #fff;
+  padding: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid black;
+}
+
+.home-icon {
+  font-size: 35px;
+  cursor: pointer;
+}
+
+.logout-btn {
+  background-color: transparent;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+.logout-btn-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 95px;
+}
+
+.logout-icon {
+  font-size: 27px;
+  color: #ff0000;
+}
+
+.logout-word {
+  font-family: 'Roboto';
+  font-size: 20px;
+  font-weight: 500;
+  color: #ff0000;
+}
